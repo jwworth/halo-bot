@@ -1,6 +1,8 @@
 module.exports = function (req, res, next) {
   var userName = req.body.user_name;
-  var players = req.body.text.replace('/halo ', '').split(' ');
+  var players = req.body.text.split(' ');
+  players.shift();
+
   var shuffled_players = shuffle(players);
   var team_a = shuffled_players.slice(0, shuffled_players.length / 2).join(' ');
   var team_b = shuffled_players.slice(shuffled_players.length / 2, shuffled_players.length).join(' ');
