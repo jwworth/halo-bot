@@ -7,8 +7,15 @@ module.exports = function (req, res, next) {
   var team_a = shuffled_players.slice(0, shuffled_players.length / 2).join(' ');
   var team_b = shuffled_players.slice(shuffled_players.length / 2, shuffled_players.length).join(' ');
 
-  var botPayload = {
-    text : 'Team A: ' + team_a + "\nTeam B: " + team_b
+  if (shuffled_players.length < 2) {
+    var botPayload = {
+      text : 'Two players required'
+    };
+  }
+  else {
+    var botPayload = {
+      text : 'Team A: ' + team_a + "\nTeam B: " + team_b
+    };
   };
 
   // avoid infinite loop
