@@ -1,7 +1,7 @@
 {
   "name": "halo-bot",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Your lunchtime gaming assistant",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
