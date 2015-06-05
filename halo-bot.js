@@ -3,28 +3,26 @@ module.exports = function (req, res, next) {
   var players = req.body.text.split(' ');
   players.shift();
 
-  var shuffled_players = shuffle(players);
-  var team_a = shuffled_players.slice(0, shuffled_players.length / 2).join(' ');
-  var team_b = shuffled_players.slice(shuffled_players.length / 2, shuffled_players.length).join(' ');
-
-  if (shuffled_players.length < 2) {
-    var botPayload = {
-      text : 'Two players required'
-    };
-  }
-  else {
-    var botPayload = {
-      text : 'Team A: ' + team_a + "\nTeam B: " + team_b
-    };
-  };
-
-  // avoid infinite loop
-  if (userName !== 'slackbot') {
-    return res.status(200).json(botPayload);
-  } else {
+  // Prevent endless loops
+  if (userName === 'slackbot') {
     return res.status(200).end();
+    }
+  // Require at least two players
+  else if (players.length < 2) {
+    return res.status(200).json({ text: 'Two players required!' });
+  }
+  // Return the teams
+  else {
+    return res.status(200).json(botPayload(players));
   };
 
+  function botPayload(players) {
+    var shuffledPlayers = shuffle(players);
+    var mid = shuffledPlayers.length / 2
+    var teamA = shuffledPlayers.slice(0, mid).join(' ');
+    var teamB = shuffledPlayers.slice(mid, shuffledPlayers.length).join(' ');
+    return { text : 'Team A: ' + teamA + "\nTeam B: " + teamB };
+  }
 
   // Adapted from: http://bost.ocks.org/mike/shuffle/
   function shuffle(array) {
