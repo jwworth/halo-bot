@@ -1,6 +1,6 @@
 module.exports = function (req, res, next) {
   var userName = req.body.user_name;
-  var players = req.body.text.split(' ');
+  var players = req.body.text.trim().split(' ');
   players.shift();
 
   // Prevent endless loops
